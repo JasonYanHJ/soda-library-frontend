@@ -9,7 +9,7 @@ function App() {
         <Shanghai3DMap />
       </div>
       <div className="h-20 bg-gray-100">
-        <SlideRuler startValue={1840} endValue={2020} unitWidth={10} />
+        <SlideRuler startValue={1840} endValue={2020} unitWidth={8} />
       </div>
     </div>
   );

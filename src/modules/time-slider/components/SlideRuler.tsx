@@ -7,6 +7,27 @@ interface SlideRulerProps {
   unitWidth: number;
 }
 
+const calculateMarkHeight = (
+  position: number,
+  currentScrollLeft: number,
+  isMainMark: boolean,
+  isSecondaryMark: boolean
+) => {
+  // 计算到中心的距离
+  const distanceFromCenter = Math.abs(position - currentScrollLeft);
+
+  // 定义基础高度
+  const baseHeight = isMainMark ? 24 : isSecondaryMark ? 20 : 16; // 24px, 20px, 16px
+
+  // 计算高度衰减因子 (距离越远，系数越小)
+  const maxDistance = 180; // 设定影响范围180px
+  const normalizedDistance = Math.min(distanceFromCenter / maxDistance, 1);
+  const heightFactor = 1 - normalizedDistance; // 线性衰减到0
+
+  // 最终高度
+  return Math.round(baseHeight * heightFactor);
+};
+
 const SlideRuler: React.FC<SlideRulerProps> = ({
   startValue,
   endValue,
@@ -94,13 +115,21 @@ const SlideRuler: React.FC<SlideRulerProps> = ({
       const isMainMark = i % 10 === 0;
       const isSecondaryMark = i % 5 === 0;
 
+      // 计算刻度线高度
+      const height = calculateMarkHeight(
+        position,
+        currentScrollLeft,
+        isMainMark,
+        isSecondaryMark
+      );
+
       marks.push(
-        <div key={i} className="absolute bottom-0" style={{ left: position }}>
-          <div
-            className={`w-px bg-gray-600 ${
-              isMainMark ? "h-6" : isSecondaryMark ? "h-4" : "h-2"
-            }`}
-          />
+        <div
+          key={i}
+          className="absolute bottom-0"
+          style={{ left: position - 1 }}
+        >
+          <div className="w-[2px] bg-gray-600" style={{ height }} />
           {isMainMark && (
             <div className="absolute -translate-x-1/2 mt-2 text-xs text-gray-700">
               {value}
