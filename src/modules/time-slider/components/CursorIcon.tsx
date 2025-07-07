@@ -1,4 +1,4 @@
-export default function CursorIcon() {
+export default function CursorIcon({ fill }: { fill?: string }) {
   return (
     <span className="anticon">
       <svg
@@ -13,7 +13,7 @@ export default function CursorIcon() {
       >
         <path
           d="M958.70539 62.365396 62.385351 367.92872l448.163089 140.925636 142.592602 449.830055L958.70539 62.365396zM958.70539 62.365396"
-          fill="#272636"
+          fill={fill ?? "#000"}
           p-id="4591"
         ></path>
       </svg>

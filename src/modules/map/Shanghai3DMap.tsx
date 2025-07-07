@@ -53,7 +53,7 @@ const Shanghai3DMap = () => {
   }, []);
 
   return (
-    <div className="w-full h-full bg-gray-900 flex flex-col">
+    <div className="w-full h-full flex flex-col">
       <ECharts3DMap mapName={mapName} option={option} mapData={mapData} />
     </div>
   );

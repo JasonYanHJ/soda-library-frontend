@@ -1,17 +1,21 @@
 import React, { useRef, useEffect, useState, useMemo } from "react";
 import CursorIcon from "./CursorIcon";
+import useResizeObserver from "use-resize-observer";
 
 interface SlideRulerProps {
   startValue: number;
   endValue: number;
   unitWidth: number;
+  color?: string;
+  scaleColor?: string;
 }
 
 const calculateMarkHeight = (
   position: number,
   currentScrollLeft: number,
   isMainMark: boolean,
-  isSecondaryMark: boolean
+  isSecondaryMark: boolean,
+  wrapperWidth: number | undefined
 ) => {
   // 计算到中心的距离
   const distanceFromCenter = Math.abs(position - currentScrollLeft);
@@ -20,7 +24,7 @@ const calculateMarkHeight = (
   const baseHeight = isMainMark ? 24 : isSecondaryMark ? 20 : 16; // 24px, 20px, 16px
 
   // 计算高度衰减因子 (距离越远，系数越小)
-  const maxDistance = 180; // 设定影响范围180px
+  const maxDistance = Math.max((wrapperWidth ?? 0) / 4, 180); // 设定影响范围
   const normalizedDistance = Math.min(distanceFromCenter / maxDistance, 1);
   const heightFactor = 1 - normalizedDistance; // 线性衰减到0
 
@@ -32,6 +36,8 @@ const SlideRuler: React.FC<SlideRulerProps> = ({
   startValue,
   endValue,
   unitWidth,
+  color,
+  scaleColor,
 }) => {
   const scrollContainerRef = useRef<HTMLDivElement>(null);
   const [, setIsScrolling] = useState(false);
@@ -39,6 +45,7 @@ const SlideRuler: React.FC<SlideRulerProps> = ({
   const scrollTimeoutRef = useRef<number>();
   const totalUnits = endValue - startValue;
   const rulerWidth = totalUnits * unitWidth;
+  const { ref: wrapperRef, width: wrapperWidth } = useResizeObserver();
 
   // 计算当前值
   const currentValue = useMemo(() => {
@@ -94,7 +101,7 @@ const SlideRuler: React.FC<SlideRulerProps> = ({
       setIsScrolling(false);
       snapToNearestScale();
       updateScrollLeft(); // 对齐后再次更新滚动位置
-    }, 100);
+    }, 50);
   };
 
   useEffect(() => {
@@ -120,7 +127,8 @@ const SlideRuler: React.FC<SlideRulerProps> = ({
         position,
         currentScrollLeft,
         isMainMark,
-        isSecondaryMark
+        isSecondaryMark,
+        wrapperWidth
       );
 
       marks.push(
@@ -129,9 +137,12 @@ const SlideRuler: React.FC<SlideRulerProps> = ({
           className="absolute bottom-0"
           style={{ left: position - 1 }}
         >
-          <div className="w-[2px] bg-gray-600" style={{ height }} />
+          <div
+            className="w-[2px] transition-all duration-50 ease-out"
+            style={{ height, backgroundColor: scaleColor }}
+          />
           {isMainMark && (
-            <div className="absolute -translate-x-1/2 mt-2 text-xs text-gray-700">
+            <div className="absolute -translate-x-1/2 mt-2 text-xs">
               {value}
             </div>
           )}
@@ -143,18 +154,20 @@ const SlideRuler: React.FC<SlideRulerProps> = ({
   };
 
   return (
-    <div className="relative w-full h-full">
+    <div
+      ref={wrapperRef}
+      className="relative w-full h-full text-[]"
+      style={{ color }}
+    >
       {/* 展示标签 */}
       <div className="absolute left-1/2 -translate-x-1/2 top-1/2 translate-y-[calc(-40px))] z-10 pointer-events-none">
-        <div className="flex flex-col items-center text-gray-700">
-          {currentValue}
-        </div>
+        <div className="flex flex-col items-center">{currentValue}</div>
       </div>
 
       {/* 游标指示器 */}
       <div className="absolute left-1/2 -translate-x-1/2 top-1/2 translate-y-1/2 z-10 pointer-events-none">
-        <div className="flex flex-col items-center text-gray-700">
-          <CursorIcon />
+        <div className="flex flex-col items-center">
+          <CursorIcon fill={color} />
         </div>
       </div>
 
@@ -168,8 +181,8 @@ const SlideRuler: React.FC<SlideRulerProps> = ({
           <div className="w-1/2 flex-shrink-0" />
           <div className="flex-shrink-0 flex items-center">
             <div
-              className="relative h-8 bg-gray-200 border-b border-gray-400"
-              style={{ width: rulerWidth }}
+              className="relative h-8 border-b"
+              style={{ width: rulerWidth, borderColor: scaleColor }}
             >
               {renderRuler()}
             </div>
