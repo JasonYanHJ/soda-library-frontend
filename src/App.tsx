@@ -1,4 +1,5 @@
 import "./App.css";
+import ControlButtons from "./modules/control-buttons/ControlButtons";
 import Shanghai3DMap from "./modules/map/Shanghai3DMap";
 import TimeSlider from "./modules/time-slider/TimeSlider";
 
@@ -8,6 +9,7 @@ function App() {
       <div className="w-full h-full">
         <Shanghai3DMap />
       </div>
+      <ControlButtons />
       <TimeSlider className="absolute bottom-0 left-0 right-0 m-4" />
     </div>
   );
