@@ -5,7 +5,7 @@ import {
 } from "@ant-design/icons";
 import { FloatButton } from "antd";
 import styled from "styled-components";
-import { useGlobalContext } from "../context/useGlobalContext";
+import { useGlobalContext } from "../global-context/useGlobalContext";
 
 const StyledFloatButton = styled(FloatButton)`
   inset-inline-start: 16px;
