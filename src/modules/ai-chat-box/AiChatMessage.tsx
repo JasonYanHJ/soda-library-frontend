@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { requestAiChat } from "./api";
+import useFluentStream from "./useFluentStream";
 
 export type UserMessageInput = {
   type: "user";
@@ -23,25 +24,25 @@ const UserMessage = ({ content }: UserMessageInput) => {
 
 const AiMessage = ({ prompt }: AiMessageInput) => {
   const [dotCnt, setDotCnt] = useState(0);
-  const [output, setOutput] = useState("");
+  const { fluentOutput, setOutput } = useFluentStream();
 
   // "思考中..."的省略号动态效果
   useEffect(() => {
-    if (output) return;
+    if (fluentOutput) return;
     setTimeout(() => setDotCnt((dotCnt + 1) % 4), 300);
-  }, [output, dotCnt]);
+  }, [fluentOutput, dotCnt]);
   const dots = ".".repeat(dotCnt) + " ".repeat(3 - dotCnt);
 
   useEffect(() => {
     const controller = new AbortController();
     requestAiChat(prompt, setOutput, controller.signal);
     return () => controller.abort();
-  }, [prompt]);
+  }, [prompt, setOutput]);
 
   return (
     <div className="flex m-4">
       <div className="py-2 px-3 md:text-base rounded-3xl rounded-bl-sm text-gray-900 bg-orange-200/90">
-        {output || <div className="min-w-16">{"思考中" + dots}</div>}
+        {fluentOutput || <div className="min-w-16">{"思考中" + dots}</div>}
       </div>
     </div>
   );
