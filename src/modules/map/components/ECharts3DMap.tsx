@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useRef, useState } from "react";
-import { init, registerMap, use as echartUse } from "echarts";
+import { init, registerMap, use as echartUse, EChartsType } from "echarts";
 import { Lines3DChart, Map3DChart } from "echarts-gl/charts";
 import { Grid3DComponent } from "echarts-gl/components";
 import useResizeObserver from "use-resize-observer";
@@ -14,10 +14,12 @@ const ECharts3DMap = ({
   mapName,
   option,
   mapData,
+  onReady,
 }: {
   mapName: string | undefined;
   option: ECBasicOption | undefined;
   mapData: MapData | undefined;
+  onReady?: (chart: EChartsType) => void;
 }) => {
   const chartRef = useRef<HTMLDivElement>(null);
   const [chart, setChart] = useState<echarts.ECharts | null>(null);
@@ -34,6 +36,8 @@ const ECharts3DMap = ({
     registerMap(mapName, mapData);
     // 设置配置项
     myChart.setOption(option);
+    // 额外操作
+    onReady?.(myChart);
 
     setLoading(false);
 
@@ -41,7 +45,7 @@ const ECharts3DMap = ({
     return () => {
       myChart.dispose();
     };
-  }, [mapData, mapName, option]);
+  }, [mapData, mapName, onReady, option]);
 
   const handleResize = useCallback(() => {
     if (!chart) return;

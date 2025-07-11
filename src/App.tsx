@@ -4,6 +4,7 @@ import GlobalContextProvider from "./modules/global-context/GlobalContextProvide
 import ControlButtons from "./modules/control-buttons/ControlButtons";
 import Shanghai3DMap from "./modules/map/Shanghai3DMap";
 import TimeSlider from "./modules/time-slider/TimeSlider";
+import AreaInformationModal from "./modules/area-info/AreaInfoModal";
 
 function App() {
   return (
@@ -16,6 +17,7 @@ function App() {
         <TimeSlider className="absolute bottom-0 left-0 right-0 m-4" />
       </div>
       <AiChatBoxModal />
+      <AreaInformationModal />
     </GlobalContextProvider>
   );
 }

@@ -1,5 +1,7 @@
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import ECharts3DMap, { MapData } from "./components/ECharts3DMap";
+import { EChartsType } from "echarts";
+import { useGlobalContext } from "../global-context/useGlobalContext";
 
 const mapName = "shanghai";
 const option = {
@@ -52,9 +54,27 @@ const Shanghai3DMap = () => {
       .then((res) => setMapData(res));
   }, []);
 
+  const { setSelectedArea, setAreaInfoOpen } = useGlobalContext();
+  const onReady = useCallback(
+    (chart: EChartsType) => {
+      chart.on("click", (params) => {
+        if (params.componentType === "series") {
+          setSelectedArea(params.name);
+          setAreaInfoOpen(true);
+        }
+      });
+    },
+    [setAreaInfoOpen, setSelectedArea]
+  );
+
   return (
     <div className="w-full h-full flex flex-col">
-      <ECharts3DMap mapName={mapName} option={option} mapData={mapData} />
+      <ECharts3DMap
+        mapName={mapName}
+        option={option}
+        mapData={mapData}
+        onReady={onReady}
+      />
     </div>
   );
 };
