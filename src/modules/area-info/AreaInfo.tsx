@@ -1,5 +1,6 @@
 import { ConfigProvider, Empty, Skeleton, Space } from "antd";
 import { useEffect, useState } from "react";
+import Balancer from "react-wrap-balancer";
 
 type Architecture = {
   nameS: string;
@@ -82,7 +83,7 @@ const AreaInfo = ({ area }: { area: string }) => {
                       key={index}
                       className="px-2 py-1 border border-blue-400 rounded-md hover:bg-blue-500 hover:text-white hover:cursor-pointer"
                     >
-                      {e.title}
+                      <Balancer>{e.title}</Balancer>
                     </button>
                   ))}
                 </Space>
@@ -99,7 +100,7 @@ const AreaInfo = ({ area }: { area: string }) => {
                       key={index}
                       className="px-2 py-1 border border-blue-400 rounded-md hover:bg-blue-500 hover:text-white hover:cursor-pointer"
                     >
-                      {a.nameS}
+                      <Balancer>{a.nameS}</Balancer>
                     </button>
                   ))}
                 </Space>
