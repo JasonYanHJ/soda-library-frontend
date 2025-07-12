@@ -1,54 +1,21 @@
-# React + TypeScript + Vite
+# 沪上史者
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+## 项目概述
 
-Currently, two official plugins are available:
+专注于上海历史可视化的 3D 地图应用。项目使用现代 React 技术栈，结合 ECharts GL 实现高性能 3D 地图渲染、AI 智能对话和时间轴交互的综合性历史文化平台。
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## 安装
 
-## Expanding the ESLint configuration
+- 建议使用`node20`或以上版本
+- `npm install` - 安装依赖
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+## 开发命令
 
-```js
-export default tseslint.config({
-  extends: [
-    // Remove ...tseslint.configs.recommended and replace with this
-    ...tseslint.configs.recommendedTypeChecked,
-    // Alternatively, use this for stricter rules
-    ...tseslint.configs.strictTypeChecked,
-    // Optionally, add this for stylistic rules
-    ...tseslint.configs.stylisticTypeChecked,
-  ],
-  languageOptions: {
-    // other options...
-    parserOptions: {
-      project: ['./tsconfig.node.json', './tsconfig.app.json'],
-      tsconfigRootDir: import.meta.dirname,
-    },
-  },
-})
-```
+- `npm run dev` - 启动开发服务器，使用 Vite 和热模块替换
+- `npm run build` - 构建生产版本（先运行 TypeScript 编译器，然后运行 Vite 构建）
+- `npm run lint` - 运行 ESLint 检查代码质量
+- `npm run preview` - 本地预览生产构建
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+## 其他技术信息
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
-
-export default tseslint.config({
-  plugins: {
-    // Add the react-x and react-dom plugins
-    'react-x': reactX,
-    'react-dom': reactDom,
-  },
-  rules: {
-    // other rules...
-    // Enable its recommended typescript rules
-    ...reactX.configs['recommended-typescript'].rules,
-    ...reactDom.configs.recommended.rules,
-  },
-})
-```
+请参考本项目的`CLAUDE.md`文档
