@@ -8,6 +8,7 @@
 
 - 建议使用`node20`或以上版本
 - `npm install` - 安装依赖
+- 由于 3D 地图组件存在尚未解决的[issue:移动端 geo 地图点击事件无响应](https://github.com/apache/echarts/issues/18627#issuecomment-1566804110)，需要在安装依赖后、首次使用 vite 运行项目前，将`node_modules/zrender/lib/dom/HandlerProxy.js`中`scope.touching = true;`这一行代码手动注释
 
 ## 开发命令
 
