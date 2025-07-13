@@ -8,7 +8,7 @@ const Modal = styled(AntdModal)`
     flex-direction: column;
     height: 80dvh;
     padding: 0 16px 16px 16px;
-    @media (width >= 40rem /* 640px */) {
+    @media (width >= 36rem /* 576px */) {
       padding: 0 24px 36px 24px !important;
     }
     .ant-modal-close {

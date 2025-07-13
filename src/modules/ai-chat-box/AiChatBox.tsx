@@ -45,7 +45,7 @@ const AiChatBox = () => {
         <div ref={bottomRef} />
       </div>
       <Space.Compact
-        size={screen.sm ? "large" : "middle"}
+        size={screen.md ? "large" : "middle"}
         className="absolute w-full bottom-0 p-2 sm:p-4"
       >
         <Input
