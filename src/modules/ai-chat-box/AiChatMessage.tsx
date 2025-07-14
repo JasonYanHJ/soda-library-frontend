@@ -40,8 +40,11 @@ const AiMessage = ({ prompt }: AiMessageInput) => {
   }, [prompt, setOutput]);
 
   return (
-    <div className="flex m-4">
-      <div className="py-2 px-3 md:text-base rounded-3xl rounded-bl-sm text-gray-900 bg-orange-200/90">
+    <div className="flex m-4 gap-2 max-sm:flex-col">
+      <span className="w-10 h-10 bg-white rounded-full overflow-hidden flex justify-center shrink-0">
+        <img src="/icon.svg" />
+      </span>
+      <div className="py-2 px-3 md:text-base rounded-3xl rounded-tl-sm text-gray-900 bg-orange-200/90">
         {fluentOutput || <div className="min-w-16">{"思考中" + dots}</div>}
       </div>
     </div>
