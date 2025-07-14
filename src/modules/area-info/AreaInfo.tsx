@@ -44,7 +44,7 @@ const AreaInfo = ({ area }: { area: string }) => {
   useEffect(() => {
     fetch(`http://49.235.130.150:8090/api/architecture?freetext=${area}`)
       .then((res) => res.json())
-      .then((res) => setArchitectures(res.data));
+      .then((res) => setArchitectures(res.data ?? []));
   }, [area]);
 
   const [historyEvents, setHistoryEvents] = useState<
@@ -55,7 +55,7 @@ const AreaInfo = ({ area }: { area: string }) => {
       `http://49.235.130.150:8090/api/eventListByText?eventFreeText=${area}`
     )
       .then((res) => res.json())
-      .then((res) => setHistoryEvents(res.data));
+      .then((res) => setHistoryEvents(res.data ?? []));
   }, [area]);
 
   const loading = !architectures || !historyEvents;
